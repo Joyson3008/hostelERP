@@ -1552,7 +1552,7 @@ response.students.forEach(function(student, index) {
 });
 
 $("#previewTableBody").html(rows);
-
+$("#previewStudents").text(response.count);
             $("#previewModal")
                     .modal("show");
         },
