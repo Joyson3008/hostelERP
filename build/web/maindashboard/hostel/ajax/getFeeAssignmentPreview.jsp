@@ -12,10 +12,22 @@
                         request.getParameter(
                                 "blockno"));
 
+        int roomnofrom =
+                Integer.parseInt(
+                        request.getParameter(
+                                "roomnofrom"));
+
+        int roomnoto =
+                Integer.parseInt(
+                        request.getParameter(
+                                "roomnoto"));
+
         String result =
                 ERPHostelFeeDAO
-                        .getFeeAssignmentPreview(
-                                blockno);
+                .getFeeAssignmentPreview(
+                        blockno,
+                        roomnofrom,
+                        roomnoto);
 
         out.print(result);
 
@@ -23,7 +35,11 @@
 
         e.printStackTrace();
 
-        out.print("{}");
+        out.print(
+            "{\"success\":false,"
+            + "\"message\":\""
+            + e.getMessage()
+            + "\"}");
     }
 
 %>

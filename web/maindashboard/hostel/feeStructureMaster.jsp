@@ -296,7 +296,13 @@
                 Load Structure
 
             </button>
+    <button class="btn btn-info"
+            id="previewBtn">
 
+        <i class="fa fa-eye"></i>
+        Preview Students
+
+    </button>
             <button class="btn btn-danger"
                     id="assignBtn">
 
@@ -1452,6 +1458,114 @@ $("#copyBtn").click(function () {
     });
 
 });
+// =========================================
+// PREVIEW STUDENTS
+// =========================================
+
+$("#previewBtn").click(function () {
+
+    let blockno =
+            $("#blockno").val();
+
+    let roomnofrom =
+            $("#roomnofrom").val();
+
+    let roomnoto =
+            $("#roomnoto").val();
+
+    if (roomnofrom === ""
+            || roomnoto === "") {
+
+        alert("Enter Room Range");
+
+        return;
+    }
+
+    $.ajax({
+
+        url :
+            "ajax/getFeeAssignmentPreview.jsp",
+
+        type : "GET",
+
+        dataType : "json",
+
+        data : {
+
+            blockno :
+                    blockno,
+
+            roomnofrom :
+                    roomnofrom,
+
+            roomnoto :
+                    roomnoto
+        },
+
+        success : function (response) {
+
+            console.log(response);
+
+            if (!response.success) {
+
+                alert(response.message);
+
+                return;
+            }
+
+let rows = "";
+
+response.students.forEach(function(student, index) {
+
+    rows +=
+        "<tr>" +
+
+            "<td>" +
+                (index + 1) +
+            "</td>" +
+
+            "<td>" +
+                student.registerno +
+            "</td>" +
+
+            "<td>" +
+                student.applicationno +
+            "</td>" +
+
+            "<td>" +
+                student.studentname +
+            "</td>" +
+
+            "<td>" +
+                student.roomno +
+            "</td>" +
+
+            "<td>" +
+                student.floorname +
+            "</td>" +
+
+            "<td>" +
+                student.blockname +
+            "</td>" +
+
+        "</tr>";
+});
+
+$("#previewTableBody").html(rows);
+
+            $("#previewModal")
+                    .modal("show");
+        },
+
+        error : function (xhr) {
+
+            console.log(xhr.responseText);
+
+            alert("Server Error");
+        }
+    });
+
+});
     // =========================================
     // RESET BUTTON
     // =========================================
@@ -1463,6 +1577,64 @@ $("#copyBtn").click(function () {
     });
 
 </script>
+<!-- PREVIEW MODAL -->
 
+<div class="modal fade"
+     id="previewModal"
+     tabindex="-1">
+
+    <div class="modal-dialog modal-xl">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-primary text-white">
+
+                <h5 class="modal-title">
+
+                    Students Preview
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+<table class="table table-bordered table-striped">
+
+    <thead>
+
+        <tr>
+
+            <th>S.No</th>
+            <th>Register No</th>
+            <th>Application No</th>
+            <th>Student Name</th>
+            <th>Room No</th>
+            <th>Floor</th>
+            <th>Block</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody id="previewTableBody">
+
+    </tbody>
+
+</table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 </body>
 </html>

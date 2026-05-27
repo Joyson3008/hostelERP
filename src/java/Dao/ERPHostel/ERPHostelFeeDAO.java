@@ -12,6 +12,121 @@ import org.json.simple.parser.JSONParser;
 import java.text.SimpleDateFormat;
 public class ERPHostelFeeDAO {
     
+public static String getFeeAssignmentPreview(
+        int blockno,
+        int roomnofrom,
+        int roomnoto) {
+
+    JSONObject response =
+            new JSONObject();
+
+    JSONArray arr =
+            new JSONArray();
+
+    try (Connection con =
+                 new CyberCon().ErpConnection()) {
+
+        String sql =
+                "SELECT "
+                + "    registerno, "
+                + "    applicationno, "
+                + "    studentname, "
+                + "    roomid, "
+                + "    roomno, "
+                + "    floorname, "
+                + "    blockname "
+                + "FROM hostel.student_room_allocation "
+                + "WHERE roomno::INTEGER "
+                + "BETWEEN ? AND ? "
+                + "AND isactive = 'Y' "
+                + "ORDER BY roomno::INTEGER ASC";
+
+        try (PreparedStatement ps =
+                     con.prepareStatement(sql)) {
+
+            ps.setInt(
+                    1,
+                    roomnofrom);
+
+            ps.setInt(
+                    2,
+                    roomnoto);
+
+            try (ResultSet rs =
+                         ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    JSONObject obj =
+                            new JSONObject();
+
+                    obj.put(
+                            "registerno",
+                            rs.getString(
+                                    "registerno"));
+
+                    obj.put(
+                            "applicationno",
+                            rs.getString(
+                                    "applicationno"));
+
+                    obj.put(
+                            "studentname",
+                            rs.getString(
+                                    "studentname"));
+
+                    obj.put(
+                            "roomid",
+                            rs.getLong(
+                                    "roomid"));
+
+                    obj.put(
+                            "roomno",
+                            rs.getString(
+                                    "roomno"));
+
+                    obj.put(
+                            "floorname",
+                            rs.getString(
+                                    "floorname"));
+
+                    obj.put(
+                            "blockname",
+                            rs.getString(
+                                    "blockname"));
+
+                    arr.add(obj);
+                }
+            }
+        }
+
+        response.put(
+                "success",
+                true);
+
+        response.put(
+                "students",
+                arr);
+
+        response.put(
+                "count",
+                arr.size());
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        response.put(
+                "success",
+                false);
+
+        response.put(
+                "message",
+                e.getMessage());
+    }
+
+    return response.toJSONString();
+} 
     
     public static String copyPreviousFeeStructure(
         int academicyearid,
