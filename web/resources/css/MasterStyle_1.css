@@ -1,0 +1,34 @@
+		H1 { margin-bottom: 2px; font-family: Garamond, "Times New Roman", Times, Serif;}
+
+		UL.tabNavigation {
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		}
+/*        tabs  */
+		UL.tabNavigation LI {
+		    display: inline;
+		}
+
+		UL.tabNavigation LI A {
+		    padding: 3px 5px;
+		    background-color: #ccc;
+		    color: #000;
+		    text-decoration: none;
+		}
+/*     end    tabs  */
+
+		UL.tabNavigation LI A.selected{
+		    background-color: #ffee85;
+		    color: #ff0000;
+		    padding-top: 7px;
+		}
+		UL.tabNavigation LI A:hover {
+		    background-color: #ffee95;
+		    color: #000;
+		    padding-top: 5px;
+		}
+
+		UL.tabNavigation LI A:focus {
+			outline: 0;
+		}

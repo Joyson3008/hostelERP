@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/src/java/Dao/ERPHostel/ERPHostelDAO.java</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/setactivemenu.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/allocatedrooms.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/blockmaster.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/messMaster.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/registeredHostelApplicants.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/roomAllocation.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/roomAllocation_1.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/roomMaster.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/usermanager/Login/Login.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/ajax/getInstitutions.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/lccerpheader.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/selectHostelApplicants.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/selectedHostelAppliciants.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/ajax/selectApplicant.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/index.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/pageController.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/src/java/Dao/ERPHostel/ERPHostelRoomDAO.java</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/usermanager/css/bootstrap-theme.css</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/usermanager/permission.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/index.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/dashboard/hosteldashboard.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/dashboard/studentCountDash.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/dashboard/studentCountDashDetails.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/ajax/getRegisteredApplicants.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/src/java/Dao/ERPHostel/HostelDashboardDAO.java</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/resources/css/TimeTableStyleSheet.css</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/ajax/allocateMess.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/ajax/generateApplicationPdf.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/ajax/downloadAllApplications.jsp</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/nbproject/build-impl.xml</file>
+            <file>file:/E:/hosteladmin/erp-hostel-new/erp-hostel-new/web/maindashboard/hostel/ajax/fetchFullProfile.jsp</file>
+        </group>
+    </open-files>
+</project-private>

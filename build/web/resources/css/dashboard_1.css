@@ -1,0 +1,254 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 4 Jun, 2020, 8:19:14 PM
+    Author     : fipl
+*/
+html { background-color: white;}
+
+body {
+    background-color: #f9f9fd;
+    align:center;
+    /*border-radius: 5px;*/
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 12px;  
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    border-radius: 25px;
+    width: 48%;
+    background-color: #fff;
+    border: 1px solid #fff;/* #f9f9fd ;*/
+    padding: 5px;
+    height: 405px; /* Should be removed. Only for demonstration */
+    margin: 12px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+/*    padding: 20px;
+    border: 1px solid highlight;*/
+    /*background-color: #fff;*/
+}
+
+.content{
+    background-color: #fff;
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 12px;  
+    margin: 0;
+}
+
+.dashboard-header {
+    /*border: 0px solid #fad42e;*/
+    /*border-radius:  25px;*/
+    /*background-color: #dee2e6;*/
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 16px;  
+    font-weight: bold;
+    /*text-align:center;*/
+    /*margin-left : 5px;*/
+    text-decoration: underline;
+    padding:10px;
+}
+
+tr.dashboard-header {
+    border: 0px solid #fad42e;
+    background-color: #fff;
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 16px;  
+    font-weight: bold;
+    text-decoration: underline;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+.dashboard-content{
+    border: 0px solid grey;
+    background-color: white;
+}
+
+.dheader1{
+    /*background-color: #008CBA;*/ 
+    height: 25px;
+    color: white;
+}
+
+.dashboard-subheader {
+    border: 0px solid #fad42e;
+    /*background: #fbec88 url(../resources/css/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;*/
+    background-color: #fff;
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 14px;  
+    font-weight: bold;
+    text-decoration: underline;
+    padding-right: 4px;
+}
+
+.dashboard-subheader2 {
+    /*border: 1px solid #fad42e;*/
+    background-color: #008CBA ;
+    /*background: #fbec88 url(../resources/css/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;*/
+    /*background-color: #fff;*/
+    color: white;
+    font-family: Trebuchet MS;
+    font-size: 10px;  
+    font-weight: bold;
+    text-decoration: underline;
+    padding-right: 4px;
+}
+
+.dashboard-subheader3 {
+    border: 1px solid #fad42e;
+    /*background: #fbec88 url(../resources/css/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;*/
+    background-color: #fff;
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 12px;  
+    font-weight: bold;
+    text-decoration: underline;
+    padding-right: 4px;
+}
+
+
+
+
+.dashboard-footer {
+    /*border: 0px solid #fad42e;*/
+    /*background: #fbec88 url(../resources/css/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;*/
+    background-color: #fff;
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 12px;  
+    /*padding-right: 4px;*/
+    position:absolute;
+    bottom:2px;
+    vertical-align: middle;
+    width:100%;
+    /*margin: 0px;*/
+    text-align: center;
+    text-decoration: underline;
+}
+
+input.datepicker{
+    /*background:  url(../../resources/Image/calendar.gif) right no-repeat;*/
+    background:  url(../../resources/Image/date-edit-button.png) right no-repeat;
+    background-color: #ffffff
+}
+
+
+.calendar{
+    height: 23px;
+    width:23px;
+    vertical-align:top;
+    cursor:pointer;
+}
+
+input:not([type="button"]), select {
+    background-color: #FFFFFF;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px 3px 3px 3px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+    transition: border 0.2s linear 0s, box-shadow 0.2s linear 0s;
+    height: 25px;
+}
+
+/* input[type="button"]{
+    background-color: #008CBA ;
+    border: none;
+    color: white;
+    padding: 9px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px; 
+    border-radius: 8px;
+    cursor: pointer;
+} */
+
+.button,submit {
+    background-color: #008CBA ;
+    border: none;
+    color: white;
+    padding: 9px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px; 
+    border-radius: 8px;
+    cursor: pointer;
+    transition-duration: 0.4s;
+}
+
+.button:hover {
+  background-color: highlight;
+  color: white;
+}
+
+.button1 {background-color: #4CAF50;} /* Green */
+.button2 {background-color: #f0ad4e} /* Orange */
+.button3 {background-color: #f44336;} /* Red */
+.button4 {background-color: #e7e7e7; color: black;} /* Gray */
+.button5 {background-color: #555555;} /* Black */
+.button6 {background-color: #002754} /* Blue */
+
+/*.table, th,tr,td{
+    padding: 5px;
+    background-color: white;
+}
+
+.table-report{
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+}
+.table.th{
+    height: 50px;
+    padding: 15px;
+    text-align: center;
+}
+
+.table.td{
+    height: 50px;
+    vertical-align: bottom;
+    padding: 15px;
+    text-align: left;
+}*/
+
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #f2f2f2;
+   border: 0px;
+}
+
+.dashboard-footer2 {
+    /*border: 0px solid #fad42e;*/
+    /*background: #fbec88 url(../resources/css/images/ui-bg_flat_55_fbec88_40x100.png) 50% 50% repeat-x;*/
+    background-color: #fff;
+    color: #6c757d;
+    font-family: Trebuchet MS;
+    font-size: 12px;  
+    /*padding-right: 4px;*/
+    /*position:absolute;*/
+    bottom:2px;
+    vertical-align: middle;
+    width:100%;
+    /*margin: 0px;*/
+    text-align: center;
+    text-decoration: underline;
+}

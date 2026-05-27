@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/erp-hostel-new">
+   <Resource name="jdbc/ERPDB" auth="Container" type="javax.sql.DataSource" 
+             factory="com.zaxxer.hikari.HikariJNDIFactory" driverClassName="org.postgresql.Driver" 
+             jdbcUrl="jdbc:postgresql://localhost:5432/erpdb?ssl=false" username="postgres" password="Joy@post" 
+             maximumPoolSize="100" 
+             minimumIdle="50" idleTimeout="30000" 
+             connectionTimeout="30000" maxLifetime="1800000" 
+             autoCommit="true"/>
+</Context>

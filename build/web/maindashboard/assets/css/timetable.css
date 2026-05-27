@@ -1,0 +1,171 @@
+/*
+  Created on : 14-Oct-2025, 1:43:09 pm
+  Author     : hp
+  Purpose    : Unified subject & timetable styling for class/faculty timetable pages
+*/
+
+/* ------------ Tables (Subject & Timetable Shared) ------------- */
+.cs-subject-table,
+.cs-timetable-grid {
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid #c0d3eb;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+}
+
+/* ------------ Header Cells ------------- */
+.cs-subject-table th,
+.cs-timetable-grid th {
+  background-color: #3c6eb4;
+  color: #fff;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px;
+}
+
+/* ------------ Body Cells ------------- */
+.cs-subject-table td,
+.cs-timetable-grid td {
+  text-align: center;
+  border: 1px solid #1A2A4F;
+  font-size: 14px;
+  font-weight: 600;
+  vertical-align: middle;
+  color: #002b5c;
+  cursor: pointer;
+  white-space: normal;       /* ✅ allow wrapping & line breaks */
+  overflow: visible;         /* ✅ let multiple lines show */   /* ✅ split long words if needed */
+  padding: 6px;
+  line-height: 1.4;
+}
+
+
+/* ------------ Column Widths ------------- */
+.cs-timetable-grid th:first-child,
+.cs-timetable-grid td:first-child {
+  width: 90px;
+  min-width: 90px;
+  max-width: 90px;
+}
+
+.cs-timetable-grid th:not(:first-child),
+.cs-timetable-grid td:not(:first-child) {
+  width: 80px;
+  min-width: 80px;
+  max-width: 80px;
+}
+
+ /*------------ Hover & Active States -------------*/ 
+.cs-subject-table tr:hover {
+  background-color: #e6f0ff;
+}
+
+.cs-timetable-grid td[data-subject] {
+  background-color: #dfeaff;
+  font-weight: 700;
+}
+
+.cs-timetable-grid td:hover {
+  background-color: #f2f7ff;
+}
+
+.matched-code {
+  color: #1a3d7c;            /* deep navy-blue tone for strong visibility */
+  font-weight: 700;          /* bold */
+  font-size: 16px;           /* larger text */
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  display: inline-block;
+  margin: 2px 4px;
+  line-height: 1.4;
+  transition: transform 0.1s ease, color 0.2s ease;
+}
+
+.matched-code:hover {
+  color: #10264d;            /* darker shade on hover */
+  transform: scale(1.1);    /* gentle zoom for clarity */
+}
+
+.unmatched-code {
+  color: #555;               /* subtle gray */
+  font-size: 14px;
+  opacity: 0.8;
+  cursor: default;
+  display: inline-block;
+  margin: 2px 4px;
+  line-height: 1.4;
+}
+
+
+
+
+.table-primary {
+  background-color: #b8d7f5 !important;
+  color: #001f47 !important;
+}
+
+/* ------------ Locked / Read-only Cells ------------- */
+.cs-timetable-grid td.locked {
+  background-color: #e2e2e2;
+  color: #777;
+  pointer-events: none;
+  font-style: italic;
+}
+
+ /*------------ Faculty & Class Specific Highlights -------------*/ 
+#facultyTimetable td {
+  background-color: #fff;
+}
+
+#facultyTimetable td.highlighted {
+  background-color: #fff !important;
+  color: #0C2B4E;
+  font-weight: 600;
+}
+
+#classTimetable td.highlighted {
+  background-color: #2F5755 !important;
+  color: #fff;
+  font-weight: 600;
+}
+
+#classTimetable td:not(.locked):hover,
+#facultyTimetable td:hover {
+  background-color: #dce7ff;
+}
+
+/* ------------ Responsive Adjustments ------------- */
+@media (max-width: 1200px) {
+  .cs-timetable-grid th:first-child,
+  .cs-timetable-grid td:first-child {
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+  }
+  .cs-timetable-grid th:not(:first-child),
+  .cs-timetable-grid td:not(:first-child) {
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+  }
+}
+
+@media (max-width: 992px) {
+  .col-sm-4,
+  .col-sm-8,
+  .col-sm-6,
+  .col-sm-3,
+  .col-sm-9 {
+    width: 100%;
+  }
+  .cs-timetable-grid,
+  .cs-subject-table {
+    margin-top: 15px;
+    display: block;
+    overflow-x: auto;
+  }
+}

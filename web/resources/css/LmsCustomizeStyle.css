@@ -1,0 +1,149 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 21 Jul, 2020, 12:26:58 PM
+    Author     : fipl
+*/
+
+.profile-text-bold{
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    margin:5px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid lightgray;
+}
+.profile-text-cursor{
+    text-align: left;
+    font-size: 14px;
+    margin:5px;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 6px;
+    cursor:pointer;
+}
+.profile-text{
+    text-align: left;
+    font-size: 14px;
+    margin:5px;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 6px;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+    box-shadow: 0 10px 5px grey;
+    flex: 15%;
+    /* max-width: 23%;*/
+    padding: 5px 0;
+    margin: 5px ;
+    /*padding: 0 4px;*/
+    border-style: inset;
+    border-width: 1px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius:   10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+    width: 100%;
+
+}
+
+.column-para {
+    box-shadow: 0 10px 5px grey;
+    flex: 15%;
+    /* max-width: 23%;*/
+    padding: 15px 0;
+    margin: 5px ;
+    margin-bottom: 15px;
+    /*padding: 0 4px;*/
+    border-style: inset;
+    border-width: 1px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius:   10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.column-para-text{
+    text-align: left;
+    font-size: 14px;
+    margin:5px;
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 6px;
+    padding: 10px;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+    .column {
+	flex: 50%;
+	max-width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .column {
+	flex: 100%;
+	max-width: 100%;
+    }
+}
+.ui-dialog-titlebar-close {
+    display: none;
+}
+.note-text{
+    color: grey;
+}
+.checkbox-middle-align{
+    margin:-1px 4px 0 0;vertical-align:middle;
+}
+.txt-justification{
+    width:100%;
+    height:30px;
+    resize:none;
+}
+.que-ans-img{
+    width:75px;
+    height:75px;
+    vertical-align: middle;
+}
+.row-break{
+    background-color:grey;
+    padding:3px;
+}
+
+.notification {
+    background-color: #002754;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    position: relative;
+    display: inline-block;
+    border-radius: 2px;
+}
+
+.notification:hover {
+    background: #4169E1;
+}
+
+.notification .badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background: red;
+    color: white;
+}
