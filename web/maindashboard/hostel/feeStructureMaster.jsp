@@ -1262,19 +1262,22 @@ $("#assignBtn").click(function () {
 
     let payload = {
 
-        feestructureid :
-                feestructureid,
+    feestructureid :
+            feestructureid,
 
-        blockno :
-                $("#blockno").val(),
+    blockno :
+            $("#blockno").val(),
 
-        roomnofrom :
-                $("#roomnofrom").val(),
+    blockname :
+            $("#blockno option:selected").text(),
 
-        roomnoto :
-                $("#roomnoto").val()
+    roomnofrom :
+            $("#roomnofrom").val(),
 
-    };
+    roomnoto :
+            $("#roomnoto").val()
+
+};
 
     console.log(payload);
 
@@ -1326,6 +1329,126 @@ $("#assignBtn").click(function () {
 
         }
 
+    });
+
+});
+
+
+// =========================================
+// COPY PREVIOUS STRUCTURE
+// =========================================
+
+$("#copyBtn").click(function () {
+
+    let academicyearid =
+            $("#academicyear").val();
+
+    let hosteltype =
+            $("#hosteltype").val();
+
+    let blockno =
+            $("#blockno").val();
+
+    if (blockno === "") {
+
+        alert("Please Select Block");
+
+        return;
+    }
+
+    $.ajax({
+
+        url  : "ajax/copyPreviousFeeStructure.jsp",
+
+        type : "GET",
+
+        dataType : "json",
+
+        data : {
+
+            academicyearid :
+                    academicyearid,
+
+            hosteltype :
+                    hosteltype,
+
+            blockno :
+                    blockno
+
+        },
+
+        success : function (response) {
+
+            console.log(response);
+
+            if (response.success) {
+
+                // =====================================
+                // SET MASTER VALUES
+                // =====================================
+
+                $("#structurename").val(
+                        response.master.structurename);
+
+                $("#roomtype").val(
+                        response.master.roomtype);
+
+                // =====================================
+                // CLEAR EXISTING ROWS
+                // =====================================
+
+                $("#feeTable tbody").empty();
+
+                // =====================================
+                // LOAD DETAILS
+                // =====================================
+
+                $.each(
+                    response.details,
+                    function (i, item) {
+
+                        addFeeRow(
+                                item.feehead,
+                                item.amount);
+                    });
+
+                // =====================================
+                // CLEAR NOTES
+                // =====================================
+
+                $("#notesContainer").empty();
+
+                // =====================================
+                // LOAD NOTES
+                // =====================================
+
+                $.each(
+                    response.notes,
+                    function (i, item) {
+
+                        addNoteRow(
+                                item.notes);
+                    });
+
+                calculateTotal();
+
+                alert(
+                    "Previous Structure Loaded");
+
+            } else {
+
+                alert(
+                    response.message);
+            }
+        },
+
+        error : function (xhr) {
+
+            console.log(
+                xhr.responseText);
+
+            alert("Server Error");
+        }
     });
 
 });

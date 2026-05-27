@@ -13,10 +13,190 @@ import java.text.SimpleDateFormat;
 public class ERPHostelFeeDAO {
     
     
-    
-    // =========================================
-// ASSIGN FEE TO STUDENTS
-// =========================================
+    public static String copyPreviousFeeStructure(
+        int academicyearid,
+        String hosteltype,
+        int blockno) {
+
+    JSONObject response =
+            new JSONObject();
+
+    JSONArray detailsArr =
+            new JSONArray();
+
+    JSONArray notesArr =
+            new JSONArray();
+
+    JSONObject masterObj =
+            new JSONObject();
+
+    try (Connection con =
+                 new CyberCon().ErpConnection()) {
+
+        // =====================================
+        // GET LATEST PREVIOUS STRUCTURE
+        // =====================================
+
+        String masterSql =
+                "SELECT * "
+                + "FROM hostel.fee_structure_master "
+                + "WHERE academicyearid = ? "
+                + "AND hosteltype = ? "
+                + "AND blockno = ? "
+                + "ORDER BY feestructureid DESC "
+                + "LIMIT 1";
+
+        long feestructureid = 0;
+
+        try (PreparedStatement ps =
+                     con.prepareStatement(masterSql)) {
+
+            ps.setInt(1, academicyearid);
+
+            ps.setString(2, hosteltype);
+
+            ps.setInt(3, blockno);
+
+            try (ResultSet rs =
+                         ps.executeQuery()) {
+
+                if (rs.next()) {
+
+                    feestructureid =
+                            rs.getLong(
+                                    "feestructureid");
+
+                    masterObj.put(
+                            "feestructureid",
+                            feestructureid);
+
+                    masterObj.put(
+                            "structurename",
+                            rs.getString(
+                                    "structurename"));
+
+                    masterObj.put(
+                            "roomtype",
+                            rs.getString(
+                                    "roomtype"));
+                }
+            }
+        }
+
+        if (feestructureid == 0) {
+
+            response.put(
+                    "success",
+                    false);
+
+            response.put(
+                    "message",
+                    "No Previous Structure Found");
+
+            return response.toJSONString();
+        }
+
+        // =====================================
+        // GET DETAILS
+        // =====================================
+
+        String detailSql =
+                "SELECT * "
+                + "FROM hostel.fee_structure_details "
+                + "WHERE feestructureid = ? "
+                + "ORDER BY orderno";
+
+        try (PreparedStatement ps =
+                     con.prepareStatement(detailSql)) {
+
+            ps.setLong(1, feestructureid);
+
+            try (ResultSet rs =
+                         ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    JSONObject obj =
+                            new JSONObject();
+
+                    obj.put(
+                            "feehead",
+                            rs.getString(
+                                    "feehead"));
+
+                    obj.put(
+                            "amount",
+                            rs.getDouble(
+                                    "amount"));
+
+                    detailsArr.add(obj);
+                }
+            }
+        }
+
+        // =====================================
+        // GET NOTES
+        // =====================================
+
+        String noteSql =
+                "SELECT * "
+                + "FROM hostel.fee_structure_notes "
+                + "WHERE feestructureid = ?";
+
+        try (PreparedStatement ps =
+                     con.prepareStatement(noteSql)) {
+
+            ps.setLong(1, feestructureid);
+
+            try (ResultSet rs =
+                         ps.executeQuery()) {
+
+                while (rs.next()) {
+
+                    JSONObject obj =
+                            new JSONObject();
+
+                    obj.put(
+                            "notes",
+                            rs.getString(
+                                    "notes"));
+
+                    notesArr.add(obj);
+                }
+            }
+        }
+
+        response.put(
+                "success",
+                true);
+
+        response.put(
+                "master",
+                masterObj);
+
+        response.put(
+                "details",
+                detailsArr);
+
+        response.put(
+                "notes",
+                notesArr);
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        response.put(
+                "success",
+                false);
+
+        response.put(
+                "message",
+                e.getMessage());
+    }
+
+    return response.toJSONString();
+}
 
 // =========================================
 // ASSIGN FEE TO STUDENTS
@@ -97,27 +277,26 @@ public static String assignFeeToStudents(
         // GET STUDENTS
         // =====================================
 
-        String studentSql =
-                "SELECT "
-                + "    registerno, "
-                + "    applicationno, "
-                + "    studentname, "
-                + "    roomid, "
-                + "    roomno, "
-                + "    blockname "
-                + "FROM hostel.student_room_allocation "
-                + "WHERE LOWER(blockname) = LOWER(?) "
-                + "AND roomno::INTEGER BETWEEN ? AND ? "
-                + "AND isactive = 'Y'";
+String studentSql =
+        "SELECT "
+        + "    registerno, "
+        + "    applicationno, "
+        + "    studentname, "
+        + "    roomid, "
+        + "    roomno, "
+        + "    blockname "
+        + "FROM hostel.student_room_allocation "
+        + "WHERE roomno::INTEGER BETWEEN ? AND ? "
+        + "AND isactive = 'Y'";
 
         try (PreparedStatement ps =
                      con.prepareStatement(studentSql)) {
 
-            ps.setString(1, blockname);
+            
 
-            ps.setInt(2, roomnofrom);
+            ps.setInt(1, roomnofrom);
 
-            ps.setInt(3, roomnoto);
+            ps.setInt(2, roomnoto);
 
             try (ResultSet rs =
                          ps.executeQuery()) {
@@ -162,10 +341,67 @@ public static String assignFeeToStudents(
                         }
                     }
 
-                    if (alreadyAssigned) {
+                   if (alreadyAssigned) {
 
-                        continue;
-                    }
+    // =================================
+    // UPDATE EXISTING STUDENT ALLOCATION
+    // =================================
+
+    String updateSql =
+            "UPDATE hostel.student_fee_allocation "
+            + "SET "
+            + "totalamount = ?, "
+            + "dueamount = ?, "
+            + "blockno = ?, "
+            + "blockname = ?, "
+            + "roomid = ?, "
+            + "roomno = ? "
+            + "WHERE feestructureid = ? "
+            + "AND registerno = ? "
+            + "AND isactive = 'Y'";
+
+    try (PreparedStatement ups =
+                 con.prepareStatement(updateSql)) {
+
+        ups.setDouble(
+                1,
+                totalamount);
+
+        ups.setDouble(
+                2,
+                totalamount);
+
+        ups.setInt(
+                3,
+                blockno);
+
+        ups.setString(
+                4,
+                rs.getString("blockname"));
+
+        ups.setLong(
+                5,
+                rs.getLong("roomid"));
+
+        ups.setString(
+                6,
+                rs.getString("roomno"));
+
+        ups.setLong(
+                7,
+                feestructureid);
+
+        ups.setString(
+                8,
+                registerno);
+
+        ups.executeUpdate();
+    }
+
+    assignedCount++;
+
+    continue;
+}
 
                     // =================================
                     // INSERT ALLOCATION

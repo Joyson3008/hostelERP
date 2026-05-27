@@ -915,8 +915,37 @@ console.log("RESPONSE:", res);
     loadData();
 
 </script>
-
 <style>
+
+.scroll-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+    border-radius: 8px;
+}
+
+/* Optional scrollbar styling */
+
+.scroll-wrapper::-webkit-scrollbar {
+    height: 12px;
+}
+
+.scroll-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.scroll-wrapper::-webkit-scrollbar-thumb {
+    background: #0d6efd;
+    border-radius: 10px;
+}
+
+.scroll-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #084298;
+}
+
+
+/* TOP / BOTTOM BUTTONS ONLY */
 
 .scroll-helper {
     position: fixed;
@@ -949,35 +978,43 @@ console.log("RESPONSE:", res);
 
 </style>
 
+
+<!-- WRAP YOUR TABLE -->
+
+<div class="scroll-wrapper">
+
+    <div class="table-responsive">
+
+        <!-- YOUR TABLE HERE -->
+
+        <table class="table table-bordered">
+            ....
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<!-- ONLY TOP & BOTTOM BUTTONS -->
+
 <div class="scroll-helper">
 
-    <!-- TOP -->
     <button id="scrollTopBtn" title="Go Top">
         ↑
     </button>
 
-    <!-- BOTTOM -->
     <button id="scrollBottomBtn" title="Go Bottom">
         ↓
     </button>
 
-    <!-- LEFT -->
-    <button id="scrollLeftBtn" title="Go Left">
-        ←
-    </button>
-
-    <!-- RIGHT -->
-    <button id="scrollRightBtn" title="Go Right">
-        →
-    </button>
-
 </div>
+
 
 <script>
 
-// ==========================================
-// SCROLL TO BOTTOM
-// ==========================================
+// SCROLL DOWN
 
 $("#scrollBottomBtn").click(function () {
 
@@ -988,9 +1025,8 @@ $("#scrollBottomBtn").click(function () {
 
 });
 
-// ==========================================
-// SCROLL TO TOP
-// ==========================================
+
+// SCROLL TOP
 
 $("#scrollTopBtn").click(function () {
 
@@ -1001,29 +1037,7 @@ $("#scrollTopBtn").click(function () {
 
 });
 
-// ==========================================
-// SCROLL RIGHT
-// ==========================================
-
-$("#scrollRightBtn").click(function () {
-
-    $(".table-responsive").animate({
-        scrollLeft: $(".table-responsive").scrollLeft() + 500
-    }, 300);
-
-});
-
-// ==========================================
-// SCROLL LEFT
-// ==========================================
-
-$("#scrollLeftBtn").click(function () {
-
-    $(".table-responsive").animate({
-        scrollLeft: $(".table-responsive").scrollLeft() - 500
-    }, 300);
-
-});
+</script>
 
 </script>
 <jsp:include page="../../lccerpfooter.jsp"/>
