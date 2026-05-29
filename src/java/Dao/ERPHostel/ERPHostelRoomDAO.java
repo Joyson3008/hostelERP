@@ -8,12 +8,107 @@ import java.sql.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import Dbs.Connect.CyberCon;
+import java.util.Map;
+import java.util.LinkedHashMap;
 
 /**
  *
  * @author lccerp26
  */
 public class ERPHostelRoomDAO {
+    
+    
+    public static String getAllAllocatedStudentsForPdf() {
+
+    JSONObject response =
+            new JSONObject();
+
+    JSONArray blocksArr =
+            new JSONArray();
+
+    try (Connection con =
+                 new CyberCon().ErpConnection()) {
+
+        String sql =
+                "SELECT "
+                + "    blockname, "
+                + "    applicationno "
+                + "FROM hostel.student_room_allocation "
+                + "WHERE isactive = 'Y' "
+                + "ORDER BY blockname, applicationno";
+
+        try (PreparedStatement ps =
+                     con.prepareStatement(sql);
+
+             ResultSet rs =
+                     ps.executeQuery()) {
+
+            Map<String, JSONArray> blockMap =
+                    new LinkedHashMap<>();
+
+            while (rs.next()) {
+
+                String blockname =
+                        rs.getString(
+                                "blockname");
+
+                String applicationno =
+                        rs.getString(
+                                "applicationno");
+
+                if (!blockMap.containsKey(
+                        blockname)) {
+
+                    blockMap.put(
+                            blockname,
+                            new JSONArray());
+                }
+
+                blockMap.get(blockname)
+                        .add(applicationno);
+            }
+
+            for (Map.Entry<String, JSONArray> entry
+                    : blockMap.entrySet()) {
+
+                JSONObject obj =
+                        new JSONObject();
+
+                obj.put(
+                        "blockname",
+                        entry.getKey());
+
+                obj.put(
+                        "applications",
+                        entry.getValue());
+
+                blocksArr.add(obj);
+            }
+        }
+
+        response.put(
+                "success",
+                true);
+
+        response.put(
+                "blocks",
+                blocksArr);
+
+    } catch (Exception e) {
+
+        e.printStackTrace();
+
+        response.put(
+                "success",
+                false);
+
+        response.put(
+                "message",
+                e.getMessage());
+    }
+
+    return response.toJSONString();
+}
 
  public static String getBlocks() {
 

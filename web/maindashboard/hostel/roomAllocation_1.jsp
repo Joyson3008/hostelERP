@@ -155,6 +155,14 @@ session.setAttribute("login","true");
 <!--                        <button class="btn btn-info mr-2" id="messBtn">Mess Allocation</button>-->
                         <button class="btn btn-success mr-2" id="viewBtn">View Selection</button>
                         <button class="btn btn-secondary" id="clearBtn">Clear</button>
+        
+                        <button class="btn btn-danger"
+        id="downloadAllocationPdfBtn">
+
+    <i class="fa-solid fa-file-pdf"></i>
+    Download All PDF
+
+</button>
                     </div>
 
                 </div>
@@ -216,6 +224,9 @@ session.setAttribute("login","true");
 <!-- Scripts -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
 
 <script>
 
@@ -602,8 +613,9 @@ var shiftFilter  = $("#shiftFilter").val();
     $("#viewBtn").click(function () {
 
 
-        var rooms      = [];
-        var totalSlots = 0;
+        var selectedBlockName = $("#blockid option:selected").text().trim();
+var rooms      = [];
+var totalSlots = 0;
 
         $(".roomChk:checked").each(function () {
             var available = parseInt($(this).data("available")) || 0;
@@ -694,17 +706,19 @@ var shiftFilter  = $("#shiftFilter").val();
                 html += "<span class='text-muted'>No students assigned to this room.</span>";
             } else {
                 html += "<table class='table table-sm table-bordered mb-0'>"
-                    +   "<thead class='table-light'><tr>"
-                    +   "<th>#</th><th>Register No</th><th>Name</th><th>Shift</th>"
-                    +   "</tr></thead><tbody>";
+    +   "<thead class='table-light'><tr>"
+    +   "<th>#</th><th>Application No</th><th>Name</th><th style='display:none'>Block</th><th>Room No</th><th>Shift</th>"
+    +   "</tr></thead><tbody>";
                 for (var k = 0; k < room.students.length; k++) {
                     var stu = room.students[k];
-                    html += "<tr>"
-                        + "<td>" + (k + 1) + "</td>"
-                        + "<td>" + (stu.registerno   || '') + "</td>"
-                        + "<td>" + (stu.studentname  || '') + "</td>"
-                        + "<td>" + (stu.shifttype    || '-') + "</td>"
-                        + "</tr>";
+html += "<tr>"
+    + "<td>" + (k + 1) + "</td>"
+    + "<td class='applicationno'>" + (stu.applicationno || '') + "</td>"
+    + "<td class='studentname'>"   + (stu.studentname   || '') + "</td>"
+    + "<td class='blockname'>"     + room.roomNo + "</td>"
+    + "<td class='roomno'>"        + room.roomNo + "</td>"
+    + "<td>" + (stu.shifttype || '-') + "</td>"
+    + "</tr>";
                 }
                 html += "</tbody></table>";
             }
@@ -796,7 +810,197 @@ var shiftFilter  = $("#shiftFilter").val();
             "<tr><td colspan='5' class='text-center text-danger'>Select Block and Floor</td></tr>"
         );
     });
+    
+    
 
+$("#downloadAllocationPdfBtn").click(function () {
+
+    const { jsPDF } = window.jspdf;
+
+    var allRows = [];
+
+    // Collect from all preview tables inside #previewContent
+    $("#previewContent table tbody tr").each(function () {
+
+        var appNo    = $(this).find(".applicationno").text().trim();
+        var name     = $(this).find(".studentname").text().trim();
+        var block    = $(this).find(".blockname").text().trim();
+        var roomNo   = $(this).find(".roomno").text().trim();
+
+        if (appNo !== "" || name !== "") {
+            allRows.push([appNo, name, block, roomNo]);
+        }
+    });
+
+    if (allRows.length === 0) {
+        alert("No allocation data to download. Please use 'View Selection' first.");
+        return;
+    }
+
+    var doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+
+
+    doc.setFillColor(13, 110, 253);
+    doc.rect(0, 0, 210, 22, "F");
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "bold");
+    doc.text("Room Allocation Report", 14, 14);
+
+
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    var now = new Date();
+    doc.text("Generated: " + now.toLocaleString(), 14, 28);
+    doc.text("Total Students: " + allRows.length, 150, 28);
+
+  
+    doc.autoTable({
+        startY : 34,
+        head   : [["Application No", "Student Name", "Block Name", "Room No"]],
+        body   : allRows,
+        styles : {
+            fontSize     : 9,
+            cellPadding  : 3,
+            valign       : "middle"
+        },
+        headStyles : {
+            fillColor    : [13, 110, 253],
+            textColor    : 255,
+            fontStyle    : "bold",
+            halign       : "center"
+        },
+        alternateRowStyles : {
+            fillColor : [240, 245, 255]
+        },
+        columnStyles : {
+            0 : { halign: "center", cellWidth: 45 },
+            1 : { cellWidth: 70 },
+            2 : { cellWidth: 40 },
+            3 : { halign: "center", cellWidth: 30 }
+        },
+        didDrawPage: function (data) {
+            
+            var pageCount = doc.internal.getNumberOfPages();
+            doc.setFontSize(8);
+            doc.setTextColor(120);
+            doc.text(
+                "Page " + data.pageNumber + " of " + pageCount,
+                105,
+                doc.internal.pageSize.height - 8,
+                { align: "center" }
+            );
+        }
+    });
+
+    doc.save("Room_Allocation_Report.pdf");
+});
+// =========================================
+// DOWNLOAD ROOM ALLOCATION PDF
+// =========================================
+
+$("#downloadAllocationPdfBtn").click(function () {
+
+    $.ajax({
+
+        url :
+            "ajax/downloadAllocationPdf.jsp",
+
+        type : "GET",
+
+        dataType : "json",
+
+        success : function (response) {
+
+            console.log(response);
+
+            if (!response.success) {
+
+                alert(response.message);
+
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+
+            let doc =
+                    new jsPDF();
+
+            let y = 20;
+
+            doc.setFontSize(18);
+
+            doc.text(
+                "Room Allocation Report",
+                14,
+                y);
+
+            y += 15;
+
+            response.blocks.forEach(function(block) {
+
+                doc.setFontSize(14);
+
+                doc.text(
+                    "BLOCK : " + block.blockname,
+                    14,
+                    y);
+
+                y += 10;
+
+                let x = 14;
+
+                block.applications.forEach(function(appno) {
+
+                    doc.roundedRect(
+                        x,
+                        y,
+                        35,
+                        10,
+                        2,
+                        2);
+
+                    doc.setFontSize(10);
+
+                    doc.text(
+                        appno,
+                        x + 5,
+                        y + 6);
+
+                    x += 40;
+
+                    if (x > 160) {
+
+                        x = 14;
+
+                        y += 15;
+                    }
+                });
+
+                y += 25;
+
+                if (y > 260) {
+
+                    doc.addPage();
+
+                    y = 20;
+                }
+            });
+
+            doc.save(
+                "Room_Allocation_Report.pdf");
+        },
+
+        error : function (xhr) {
+
+            console.log(xhr.responseText);
+
+            alert("Server Error");
+        }
+    });
+
+});
 </script>
 
 <jsp:include page="../../lccerpfooter.jsp"/>
